@@ -25,9 +25,9 @@ import { AVATARS } from "@/app/lib/constants";
 const DEFAULT_CONFIG: StartAvatarRequest = {
   quality: AvatarQuality.High,
   avatarName: AVATARS[0].avatar_id,
-  knowledgeId: "17ed1e5db806433ea964157fdd829850",
+  knowledgeId: "7135d45468ea4ba195356c92cae0d8fb",
   voice: {
-    voiceId: "5405e45af6674ed09485e17cd624a95f",
+    // voiceId: "5405e45af6674ed09485e17cd624a95f",
     rate: 1.0,
     emotion: VoiceEmotion.EXCITED,
     model: ElevenLabsModel.eleven_multilingual_v2,
