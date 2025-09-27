@@ -138,11 +138,7 @@ function InteractiveAvatar() {
         <div className="w-full flex flex-row gap-4">
           {/* Left side: Avatar/Voice area */}
           <div className="flex flex-1 relative rounded-xl bg-zinc-900 overflow-hidden">
-            <AvatarVideo
-              ref={mediaStream}
-              className="w-full h-full object-cover"
-            />
-
+            <AvatarVideo ref={mediaStream} />
             {sessionState === StreamingAvatarSessionState.CONNECTED ? (
               <div className="absolute bottom-4 flex justify-center w-full">
                 <AvatarControls />
