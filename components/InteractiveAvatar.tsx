@@ -23,13 +23,14 @@ import { MessageHistory } from "./AvatarSession/MessageHistory";
 import { AVATARS } from "@/app/lib/constants";
 
 const DEFAULT_CONFIG: StartAvatarRequest = {
-  quality: AvatarQuality.Low,
+  quality: AvatarQuality.High,
   avatarName: AVATARS[0].avatar_id,
-  knowledgeId: undefined,
+  knowledgeId: "17ed1e5db806433ea964157fdd829850",
   voice: {
-    rate: 1.5,
+    voiceId: "5405e45af6674ed09485e17cd624a95f",
+    rate: 1.0,
     emotion: VoiceEmotion.EXCITED,
-    model: ElevenLabsModel.eleven_flash_v2_5,
+    model: ElevenLabsModel.eleven_multilingual_v2,
   },
   language: "en",
   voiceChatTransport: VoiceChatTransport.WEBSOCKET,
@@ -123,37 +124,47 @@ function InteractiveAvatar() {
   }, [mediaStream, stream]);
 
   return (
-    <div className="w-full flex flex-col gap-4">
-      <div className="flex flex-col rounded-xl bg-zinc-900 overflow-hidden">
-        <div className="relative w-full aspect-video overflow-hidden flex flex-col items-center justify-center">
-          {sessionState !== StreamingAvatarSessionState.INACTIVE ? (
-            <AvatarVideo ref={mediaStream} />
-          ) : (
+    <div className="w-full h-full flex">
+      {sessionState === StreamingAvatarSessionState.INACTIVE ? (
+        // Inactive screen (centered setup)
+        <div className="flex flex-1 items-center justify-center">
+          <div className="flex flex-col items-center gap-6 rounded-xl bg-zinc-900 p-6">
             <AvatarConfig config={config} onConfigChange={setConfig} />
-          )}
+            <Button onClick={() => startSessionV2(true)}>Start Voice Chat</Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-3 items-center justify-center p-4 border-t border-zinc-700 w-full">
-          {sessionState === StreamingAvatarSessionState.CONNECTED ? (
-            <AvatarControls />
-          ) : sessionState === StreamingAvatarSessionState.INACTIVE ? (
-            <div className="flex flex-row gap-4">
-              <Button onClick={() => startSessionV2(true)}>
-                Start Voice Chat
-              </Button>
-              <Button onClick={() => startSessionV2(false)}>
-                Start Text Chat
-              </Button>
+      ) : (
+        // Active / Connecting screen
+        <div className="w-full flex flex-row gap-4">
+          {/* Left side: Avatar/Voice area */}
+          <div className="flex flex-1 relative rounded-xl bg-zinc-900 overflow-hidden">
+            <AvatarVideo
+              ref={mediaStream}
+              className="w-full h-full object-cover"
+            />
+
+            {sessionState === StreamingAvatarSessionState.CONNECTED ? (
+              <div className="absolute bottom-4 flex justify-center w-full">
+                <AvatarControls />
+              </div>
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <LoadingIcon />
+              </div>
+            )}
+          </div>
+
+          {/* Right side: Messages */}
+          {/* {sessionState === StreamingAvatarSessionState.CONNECTED && (
+            <div className="w-1/3 flex flex-col rounded-xl bg-zinc-800 p-4 overflow-y-auto">
+              <MessageHistory />
             </div>
-          ) : (
-            <LoadingIcon />
-          )}
+          )} */}
         </div>
-      </div>
-      {sessionState === StreamingAvatarSessionState.CONNECTED && (
-        <MessageHistory />
       )}
     </div>
-  );
+
+  );  
 }
 
 export default function InteractiveAvatarWrapper() {
