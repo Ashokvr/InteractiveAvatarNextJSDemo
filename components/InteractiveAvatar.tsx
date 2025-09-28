@@ -55,7 +55,7 @@ function InteractiveAvatar() {
       });
       const token = await response.text();
 
-      console.log("Access Token:", token); // Log the token to verify
+      //console.log("Access Token:", token); // Log the token to verify
 
       return token;
     } catch (error) {
@@ -70,34 +70,34 @@ function InteractiveAvatar() {
       const avatar = initAvatar(newToken);
 
       avatar.on(StreamingEvents.AVATAR_START_TALKING, (e) => {
-        console.log("Avatar started talking", e);
+        //console.log("Avatar started talking", e);
       });
       avatar.on(StreamingEvents.AVATAR_STOP_TALKING, (e) => {
-        console.log("Avatar stopped talking", e);
+        //console.log("Avatar stopped talking", e);
       });
       avatar.on(StreamingEvents.STREAM_DISCONNECTED, () => {
-        console.log("Stream disconnected");
+        //console.log("Stream disconnected");
       });
       avatar.on(StreamingEvents.STREAM_READY, (event) => {
-        console.log(">>>>> Stream ready:", event.detail);
+        //console.log(">>>>> Stream ready:", event.detail);
       });
       avatar.on(StreamingEvents.USER_START, (event) => {
-        console.log(">>>>> User started talking:", event);
+        //console.log(">>>>> User started talking:", event);
       });
       avatar.on(StreamingEvents.USER_STOP, (event) => {
-        console.log(">>>>> User stopped talking:", event);
+        //console.log(">>>>> User stopped talking:", event);
       });
       avatar.on(StreamingEvents.USER_END_MESSAGE, (event) => {
-        console.log(">>>>> User end message:", event);
+        //console.log(">>>>> User end message:", event);
       });
       avatar.on(StreamingEvents.USER_TALKING_MESSAGE, (event) => {
-        console.log(">>>>> User talking message:", event);
+        //console.log(">>>>> User talking message:", event);
       });
       avatar.on(StreamingEvents.AVATAR_TALKING_MESSAGE, (event) => {
-        console.log(">>>>> Avatar talking message:", event);
+        //console.log(">>>>> Avatar talking message:", event);
       });
       avatar.on(StreamingEvents.AVATAR_END_MESSAGE, (event) => {
-        console.log(">>>>> Avatar end message:", event);
+        //console.log(">>>>> Avatar end message:", event);
       });
 
       await startAvatar(config);
