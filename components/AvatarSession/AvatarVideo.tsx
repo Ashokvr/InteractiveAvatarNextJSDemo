@@ -4,7 +4,7 @@ import { ConnectionQuality } from "@heygen/streaming-avatar";
 import { useConnectionQuality } from "../logic/useConnectionQuality";
 import { useStreamingAvatarSession } from "../logic/useStreamingAvatarSession";
 import { StreamingAvatarSessionState } from "../logic";
-import { CloseIcon } from "../Icons";
+import { CloseChatIcon,CloseIcon } from "../Icons";
 import { Button } from "../Button";
 
 export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
@@ -22,12 +22,13 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
       )} */}
       {isLoaded && (
         <Button
-          className="absolute top-3 right-3 !p-2 bg-zinc-700 bg-opacity-50 z-10"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 !p-2 bg-zinc-700 bg-opacity-50 z-10"
           onClick={stopAvatar}
         >
           <CloseIcon />
         </Button>
       )}
+
       <video
         ref={ref}
         autoPlay
@@ -40,11 +41,11 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
       >
         <track kind="captions" />
       </video>
-      {!isLoaded && (
+      {/* {!isLoaded && (
         <div className="w-full h-full flex items-center justify-center absolute top-0 left-0">
           Loading...
         </div>
-      )}
+      )} */}
     </>
   );
 });

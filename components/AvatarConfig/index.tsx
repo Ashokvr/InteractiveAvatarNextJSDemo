@@ -40,7 +40,7 @@ export const AvatarConfig: React.FC<AvatarConfigProps> = ({
     if (!avatar) {
       return {
         isCustom: true,
-        name: "Custom Avatar ID",
+        name: "Assistant ID",
         avatarId: null,
       };
     } else {
@@ -54,7 +54,7 @@ export const AvatarConfig: React.FC<AvatarConfigProps> = ({
 
   return (
     <div className="relative flex flex-col gap-4 w-[550px] py-8 max-h-full overflow-y-auto px-4">
-      <Field label="Avatar ID">
+      <Field label="Assistant Role">
         <Select
           isSelected={(option) =>
             typeof option === "string"
@@ -65,7 +65,7 @@ export const AvatarConfig: React.FC<AvatarConfigProps> = ({
           placeholder="Select Avatar"
           renderOption={(option) => {
             return typeof option === "string"
-              ? "Custom Avatar ID"
+              ? "Assistant ID"
               : option.name;
           }}
           value={
@@ -81,7 +81,7 @@ export const AvatarConfig: React.FC<AvatarConfigProps> = ({
         />
       </Field>
       {selectedAvatar?.isCustom && (
-        <Field label="Custom Avatar ID">
+        <Field label="Custom Assistant ID">
           <Input
             placeholder="Enter custom avatar ID"
             value={config.avatarName}
