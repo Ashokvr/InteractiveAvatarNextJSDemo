@@ -141,7 +141,7 @@ function InteractiveAvatar() {
             
               {/* Right side: Config + button */}
               <div className="flex w-full md:w-1/2 items-center justify-center">
-                <div className="flex flex-col items-center gap-6 rounded-xl bg-zinc-900 p-8">
+                <div className="flex flex-col items-center gap-6  bg-zinc-900 p-8">
                   <AvatarConfig config={config} onConfigChange={setConfig} />
                   <Button
                     className="bg-[#E63922]"
@@ -157,7 +157,7 @@ function InteractiveAvatar() {
         // Active / Connecting screen
         <div className="w-full flex flex-row">
           {/* Left side: Avatar/Voice area */}
-          <div className="flex flex-1 relative rounded-xl bg-zinc-900 overflow-hidden">
+          <div className="flex flex-1 relative bg-zinc-900 overflow-hidden">
             <AvatarVideo ref={mediaStream} />
             {sessionState === StreamingAvatarSessionState.CONNECTED ? (
               <div className="absolute bottom-4 flex justify-center w-full">
@@ -194,7 +194,7 @@ function InteractiveAvatar() {
 
           {/* Right side: Messages */}
           {sessionState === StreamingAvatarSessionState.CONNECTED && showChat && (
-            <div className="w-1/3 flex flex-col rounded-xl bg-zinc-800 p-4 overflow-y-auto">
+            <div className="w-1/3 flex flex-col  bg-zinc-800 p-4 overflow-y-auto">
               <MessageHistory config={config} />
             </div>
           )}

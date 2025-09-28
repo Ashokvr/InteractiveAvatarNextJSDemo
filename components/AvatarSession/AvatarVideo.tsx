@@ -21,12 +21,12 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
         </div>
       )} */}
       {isLoaded && (
-        <Button
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 !p-2 bg-zinc-700 bg-opacity-50 z-10"
+        <button
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 !p-2  z-10"
           onClick={stopAvatar}
         >
           <CloseIcon />
-        </Button>
+        </button>
       )}
 
       <video
