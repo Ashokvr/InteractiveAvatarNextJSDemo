@@ -14,7 +14,17 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
   useEffect(() => {
     const container = containerRef.current;
     if (!container || messages.length === 0) return;
-    container.scrollTop = container.scrollHeight;
+
+    // check if user is within ~100px of bottom
+    const isNearBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+
+    if (isNearBottom) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [messages]);
 
   const getAvatarName = (avatarName: string) => {
@@ -25,7 +35,9 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
   return (
     <div
       ref={containerRef}
-      className="w-full sm:w-[400px] md:w-[500px] lg:w-[600px] max-w-full overflow-y-auto flex flex-col gap-2 px-4 sm:px-6 md:px-8 py-2 text-white self-center"
+      className="flex flex-col gap-2 px-4 sm:px-6 md:px-8 py-2 
+                 text-white self-center w-full 
+                 max-h-[90%] overflow-y-auto rounded-lg"
     >
       {messages.map((message) => (
         <div
@@ -41,7 +53,7 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
               ? getAvatarName(config.avatarName)
               : "You"}
           </p>
-          <p className="text-sm">{message.content}</p>
+          <p className="text-sm break-words">{message.content}</p>
         </div>
       ))}
     </div>
