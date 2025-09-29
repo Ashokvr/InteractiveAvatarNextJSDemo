@@ -37,7 +37,7 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
       ref={containerRef}
       className="flex flex-col gap-2 px-4 sm:px-6 md:px-8 py-2 
                  text-white self-center w-full 
-                 max-h-[90%] overflow-y-auto rounded-lg"
+                 max-h-screen h-[90vh] overflow-y-auto rounded-lg"
     >
       {messages.map((message) => (
         <div
