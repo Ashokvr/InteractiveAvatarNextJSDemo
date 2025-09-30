@@ -27,9 +27,9 @@ const DEFAULT_CONFIG: StartAvatarRequest = {
   knowledgeId: "7135d45468ea4ba195356c92cae0d8fb",
   voice: {
     // voiceId: "5405e45af6674ed09485e17cd624a95f",
-    rate: 1.0,
-    emotion: VoiceEmotion.EXCITED,
-    model: ElevenLabsModel.eleven_multilingual_v2,
+    rate: 0.6,
+    emotion: VoiceEmotion.FRIENDLY,
+    model: ElevenLabsModel.eleven_flash_v2_5,
   },
   language: "en",
   voiceChatTransport: VoiceChatTransport.WEBSOCKET,
@@ -101,10 +101,8 @@ function InteractiveAvatar() {
       });
 
       await startAvatar(config);
-
-      if (isVoiceChat) {
-        await startVoiceChat();
-      }
+      await startVoiceChat();
+      
     } catch (error) {
       console.error("Error starting avatar session:", error);
     }

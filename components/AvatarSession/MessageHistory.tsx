@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useMessageHistory, MessageSender } from "../logic";
-import { AVATARS,knowledgeBases } from "@/app/lib/constants";
+import { knowledgeBases } from "@/app/lib/constants";
 import { StartAvatarRequest } from "@heygen/streaming-avatar";
 
 interface MessageHistoryProps {
@@ -15,7 +15,6 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
     const container = containerRef.current;
     if (!container || messages.length === 0) return;
 
-    // check if user is within ~100px of bottom
     const isNearBottom =
       container.scrollHeight - container.scrollTop - container.clientHeight < 100;
 
@@ -30,6 +29,17 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
   const getAvatarName = (avatarName: string) => {
     const avatar = knowledgeBases.find((a) => a.id === avatarName);
     return avatar ? avatar.avatarname : "Assistant";
+  };
+
+  const sanitizeMessage = (text: string) => {
+    // Remove all special characters except newlines and spaces
+    const cleaned = text.replace(/[^\w\s\n]/g, "");
+    // Split on newlines and render each as a separate line
+    return cleaned.split("\n").map((line, i) => (
+      <p key={i} className="text-sm break-words">
+        {line}
+      </p>
+    ));
   };
 
   return (
@@ -53,7 +63,7 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
               ? getAvatarName(config.knowledgeId || "")
               : "You"}
           </p>
-          <p className="text-sm break-words">{message.content}</p>
+          {sanitizeMessage(message.content)}
         </div>
       ))}
     </div>
