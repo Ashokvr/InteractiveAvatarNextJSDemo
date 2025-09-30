@@ -1,83 +1,38 @@
 export const AVATARS = [
   { avatar_id: "June_HR_public", name: "June Quality Manager" },
 
-  // { avatar_id: "Silas_CustomerSupport_public", name: "Silas Customer Support" },
-  // { avatar_id: "SilasHR_public", name: "Silas HR" },
-  
-  // { avatar_id: "Wayne_20240711", name: "Wayne" },
 
-  // { avatar_id: "Thaddeus_ProfessionalLook2_public", name: "Thaddeus Professional Look 2" },
-  // { avatar_id: "Thaddeus_ProfessionalLook_public", name: "Thaddeus Professional Look" },
-  // { avatar_id: "Thaddeus_CasualLook_public", name: "Thaddeus Casual Look" },
-  // { avatar_id: "Thaddeus_Black_Shirt_public", name: "Thaddeus in Black Shirt" },
-  // { avatar_id: "Thaddeus_Black_Suit_public", name: "Thaddeus in Black Suit" },
   { avatar_id: "Thaddeus_Chair_Sitting_public", name: "Thaddeus Complaint Handling Specialist" },
 
-  // { avatar_id: "Pedro_ProfessionalLook2_public", name: "Pedro Professional Look 2" },
-  // { avatar_id: "Pedro_ProfessionalLook_public", name: "Pedro Professional Look" },
-  // { avatar_id: "Pedro_CasualLook_public", name: "Pedro Casual Look" },
-  // { avatar_id: "Pedro_Black_Suit_public", name: "Pedro in Black Suit" },
-  // { avatar_id: "Pedro_Blue_Shirt_public", name: "Pedro in Blue Shirt" },
   { avatar_id: "Pedro_Chair_Sitting_public", name: "Pedro Quality Assurance (QA) Specialist" },
 
-  // { avatar_id: "Marianne_ProfessionalLook2_public", name: "Marianne Professional Look 2" },
-  // { avatar_id: "Marianne_ProfessionalLook_public", name: "Marianne Professional Look" },
-  // { avatar_id: "Marianne_CasualLook_public", name: "Marianne Casual Look" },
-  // { avatar_id: "Marianne_Black_Suit_public", name: "Marianne in Black Suit" },
-  // { avatar_id: "Marianne_Red_Suit_public", name: "Marianne in Red Suit" },
   { avatar_id: "Marianne_Chair_Sitting_public", name: "Marianne Quality Control (QC) Analyst" },
 
-  // { avatar_id: "Katya_ProfessionalLook2_public", name: "Katya Professional Look 2" },
-  // { avatar_id: "Katya_ProfessionalLook_public", name: "Katya Professional Look" },
-  // { avatar_id: "Katya_CasualLook_public", name: "Katya Casual Look" },
-  // { avatar_id: "Katya_Black_Suit_public", name: "Katya in Black Suit" },
-  // { avatar_id: "Katya_Pink_Suit_public", name: "Katya in Pink Suit" },
+
   { avatar_id: "Katya_Chair_Sitting_public", name: "Katya Regulatory Affairs Specialist" },
 
-  // { avatar_id: "Graham_ProfessionalLook2_public", name: "Graham Professional Look 2" },
-  // { avatar_id: "Graham_ProfessionalLook_public", name: "Graham Professional Look" },
-  // { avatar_id: "Graham_CasualLook_public", name: "Graham Casual Look" },
-  // { avatar_id: "Graham_Black_Suit_public", name: "Graham in Black Suit" },
-  // { avatar_id: "Graham_Black_Shirt_public", name: "Graham in Black Shirt" },
   { avatar_id: "Graham_Chair_Sitting_public", name: "Graham CAPA Coordinator" },
 
-  // { avatar_id: "Anthony_ProfessionalLook2_public", name: "Anthony Professional Look 2" },
-  // { avatar_id: "Anthony_ProfessionalLook_public", name: "Anthony Professional Look" },
-  // { avatar_id: "Anthony_CasualLook_public", name: "Anthony Casual Look" },
-  // { avatar_id: "Anthony_Black_Suit_public", name: "Anthony in Black Suit" },
-  // { avatar_id: "Anthony_White_Suit_public", name: "Anthony in White Suit" },
+ 
   { avatar_id: "Anthony_Chair_Sitting_public", name: "Anthony Document Control Specialist" },
 
-  // { avatar_id: "Alessandra_ProfessionalLook2_public", name: "Alessandra Professional Look 2" },
-  // { avatar_id: "Alessandra_ProfessionalLook_public", name: "Alessandra Professional Look" },
-  // { avatar_id: "Alessandra_CasualLook_public", name: "Alessandra Casual Look" },
-  // { avatar_id: "Alessandra_Grey_Sweater_public", name: "Alessandra in Grey Sweater" },
-  // { avatar_id: "Alessandra_Black_Suit_public", name: "Alessandra in Black Suit" },
-  { avatar_id: "Alessandra_Chair_Sitting_public", name: "Alessandra Root Cause Analysis Investigator" },
+   { avatar_id: "Alessandra_Chair_Sitting_public", name: "Alessandra Root Cause Analysis Investigator" },
 
-  // { avatar_id: "Anastasia_ProfessionalLook2_public", name: "Anastasia Professional Look 2" },
-  // { avatar_id: "Anastasia_ProfessionalLook_public", name: "Anastasia Professional Look" },
-  // { avatar_id: "Anastasia_CasualLook_public", name: "Anastasia Casual Look" },
-  // { avatar_id: "Anastasia_Black_Suit_public", name: "Anastasia in Black Suit" },
-  // { avatar_id: "Anastasia_Grey_Shirt_public", name: "Anastasia in Grey Shirt" },
+  
   { avatar_id: "Anastasia_Chair_Sitting_public", name: "Anastasia Customer Quality Engineer" },
 
-  // { avatar_id: "Amina_ProfessionalLook2_public", name: "Amina Professional Look 2" },
-  // { avatar_id: "Amina_ProfessionalLook_public", name: "Amina Professional Look" },
-  // { avatar_id: "Amina_CasualLook_public", name: "Amina Casual Look" },
-  // { avatar_id: "Amina_Black_Suit_public", name: "Amina in Black Suit" },
-  // { avatar_id: "Amina_Blue_Suit_public", name: "Amina in Blue Suit" },
+  
   { avatar_id: "Amina_Chair_Sitting_public", name: "Amina Supplier Quality Engineer" },
 
-  // { avatar_id: "Rika_ProfessionalLook2_public", name: "Rika Professional Look 2" },
-  // { avatar_id: "Rika_ProfessionalLook_public", name: "Rika Professional Look" },
-  // { avatar_id: "Rika_CasualLook_public", name: "Rika Casual Look" },
-  // { avatar_id: "Rika_Blue_Suit_public", name: "Rika in Blue Suit" },
-  // { avatar_id: "Rika_Black_Suit_public", name: "Rika in Black Suit" },
+
   { avatar_id: "Rika_Chair_Sitting_public", name: "Rika Compliance Auditor" },
 
 ];
-
+export const knowledgeBases = [
+  { id: "07cfa17011a445e5bedbb072066c9d96", name: "Employee Safety Training – RNH Machine LLC",avatarname:"Employee Safety Trainer" },
+  { id: "7135d45468ea4ba195356c92cae0d8fb", name: "Quality Management System InTake", avatarname:"Quality Manager" },
+  { id: "97a8db4d61eb4835b4c78c4f94003530", name: "Quality System Document Control Process", avatarname:"Document Control Specialist" },
+];
 
 export const STT_LANGUAGE_LIST = [
   { label: "Bulgarian", value: "bg", key: "bg" },

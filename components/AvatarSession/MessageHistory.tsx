@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useMessageHistory, MessageSender } from "../logic";
-import { AVATARS } from "@/app/lib/constants";
+import { AVATARS,knowledgeBases } from "@/app/lib/constants";
 import { StartAvatarRequest } from "@heygen/streaming-avatar";
 
 interface MessageHistoryProps {
@@ -28,8 +28,8 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
   }, [messages]);
 
   const getAvatarName = (avatarName: string) => {
-    const avatar = AVATARS.find((a) => a.avatar_id === avatarName);
-    return avatar ? avatar.name : "Assistant";
+    const avatar = knowledgeBases.find((a) => a.id === avatarName);
+    return avatar ? avatar.avatarname : "Assistant";
   };
 
   return (
@@ -50,7 +50,7 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
         >
           <p className="text-xs text-zinc-400">
             {message.sender === MessageSender.AVATAR
-              ? getAvatarName(config.avatarName)
+              ? getAvatarName(config.knowledgeId || "")
               : "You"}
           </p>
           <p className="text-sm break-words">{message.content}</p>
