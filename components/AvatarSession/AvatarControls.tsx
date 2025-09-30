@@ -22,7 +22,7 @@ export const AvatarControls: React.FC = () => {
   return (
     <div className="flex flex-col gap-3 relative w-full items-center">
       {/* Raised toggle group */}
-      <div className="mt-[-20px] flex justify-center">
+      {/* <div className="mt-[-20px] flex justify-center">
         <ToggleGroup
           className={`bg-zinc-700 rounded-lg p-1 ${
             isVoiceChatLoading ? "opacity-50" : ""
@@ -55,7 +55,7 @@ export const AvatarControls: React.FC = () => {
             Text Chat
           </ToggleGroupItem>
         </ToggleGroup>
-      </div>
+      </div> */}
 
       {/* Controls row: mic on the right */}
       <div className="flex w-full justify-between items-center px-4">

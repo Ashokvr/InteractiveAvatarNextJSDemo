@@ -39,7 +39,7 @@ const DEFAULT_CONFIG: StartAvatarRequest = {
 };
 
 function InteractiveAvatar() {
-  const { initAvatar, startAvatar, stopAvatar, sessionState, stream } =
+  const { initAvatar, startAvatar, stopAvatar, sessionState, stream,isAvatarTalking } =
     useStreamingAvatarSession();
   const { startVoiceChat } = useVoiceChat();
 
@@ -121,6 +121,7 @@ function InteractiveAvatar() {
     }
   }, [mediaStream, stream]);
 
+
   return (
     <div className="w-full h-full flex">
       {sessionState === StreamingAvatarSessionState.INACTIVE ? (
@@ -200,7 +201,7 @@ function InteractiveAvatar() {
 
               {/* Text input fixed at the bottom of chat */}
               <div className="border-t border-zinc-700 p-2">
-                <TextInput />
+              {!isAvatarTalking && <TextInput />}
               </div>
             </div>
           )}

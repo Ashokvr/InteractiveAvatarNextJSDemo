@@ -30,6 +30,8 @@ export const useStreamingAvatarSession = () => {
     clearMessages,
   } = useStreamingAvatarContext();
   const { stopVoiceChat } = useVoiceChat();
+  const { isAvatarTalking } = useStreamingAvatarContext();
+
 
   useMessageHistory();
 
@@ -154,5 +156,6 @@ export const useStreamingAvatarSession = () => {
     initAvatar: init,
     startAvatar: start,
     stopAvatar: stop,
+    isAvatarTalking,
   };
 };
