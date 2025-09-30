@@ -20,14 +20,14 @@ import { LoadingIcon } from "./Icons";
 import { MessageHistory } from "./AvatarSession/MessageHistory";
 import Logo from "@/components/Logo";
 import { AVATARS } from "@/app/lib/constants";
-
+import { TextInput } from "./AvatarSession/TextInput";
 const DEFAULT_CONFIG: StartAvatarRequest = {
   quality: AvatarQuality.High,
   avatarName: AVATARS[0].avatar_id,
   knowledgeId: "7135d45468ea4ba195356c92cae0d8fb",
   voice: {
     // voiceId: "5405e45af6674ed09485e17cd624a95f",
-    rate: 0.6,
+    rate: 1.0,
     emotion: VoiceEmotion.FRIENDLY,
     model: ElevenLabsModel.eleven_flash_v2_5,
   },
@@ -193,7 +193,15 @@ function InteractiveAvatar() {
           {/* Right side: Messages */}
           {sessionState === StreamingAvatarSessionState.CONNECTED && showChat && (
             <div className="w-1/3 flex flex-col  bg-zinc-800 p-4 overflow-y-auto">
-              <MessageHistory config={config} />
+              {/* Message history (scrollable) */}
+              <div className="flex-1 overflow-y-auto p-4">
+                <MessageHistory config={config} />
+              </div>
+
+              {/* Text input fixed at the bottom of chat */}
+              <div className="border-t border-zinc-700 p-2">
+                <TextInput />
+              </div>
             </div>
           )}
         </div>
