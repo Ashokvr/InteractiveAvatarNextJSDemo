@@ -1,6 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
 import React from "react";
-
+import { useState } from "react";
 import { useVoiceChat } from "../logic/useVoiceChat";
 import { Button } from "../Button";
 import { useInterrupt } from "../logic/useInterrupt";
@@ -15,13 +15,25 @@ export const AvatarControls: React.FC = () => {
     startVoiceChat,
     stopVoiceChat,
   } = useVoiceChat();
+  const [showButton, setShowButton] = useState(false);
+
   const { interrupt } = useInterrupt();
 
   return (
+    <>
     <div className="flex flex-col gap-3 relative w-full items-center">
       <div className="absolute top-[-70px] right-3">
           <AudioInput /> 
       </div>
     </div>
+    {showButton && (
+        <div className="absolute top-[-70px] right-3">
+          <Button className="!bg-zinc-700 !text-white" onClick={interrupt}>
+            Interrupt
+          </Button>
+        </div>
+    )}
+    </>
+    
   );
 };
