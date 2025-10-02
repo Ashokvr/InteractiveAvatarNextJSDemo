@@ -29,7 +29,7 @@ const DEFAULT_CONFIG: StartAvatarRequest = {
     // voiceId: "5405e45af6674ed09485e17cd624a95f",
     rate: 1.0,
     emotion: VoiceEmotion.FRIENDLY,
-    model: ElevenLabsModel.eleven_flash_v2_5,
+    model: ElevenLabsModel.eleven_multilingual_v2,
   },
   language: "en",
   voiceChatTransport: VoiceChatTransport.WEBSOCKET,
