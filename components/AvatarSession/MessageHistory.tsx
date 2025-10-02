@@ -32,9 +32,8 @@ export const MessageHistory: React.FC<MessageHistoryProps> = ({ config }) => {
   };
 
   const sanitizeMessage = (text: string) => {
-    // Remove all special characters except newlines and spaces
-    const cleaned = text.replace(/[^\w\s\n]/g, "");
-    // Split on newlines and render each as a separate line
+    // Allow letters (all unicode), numbers, spaces, and newlines
+    const cleaned = text.replace(/[^\u0000-\u007F\u0400-\u04FF\u4E00-\u9FFF\u0600-\u06FF0-9a-zA-Z\s\n]/g, "");
     return cleaned.split("\n").map((line, i) => (
       <p key={i} className="text-sm break-words">
         {line}
