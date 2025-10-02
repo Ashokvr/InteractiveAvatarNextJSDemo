@@ -50,6 +50,18 @@ export const AvatarConfig: React.FC<AvatarConfigProps> = ({
           }}
         />
       </Field>
+      <Field label="Language">
+        <Select
+          isSelected={(option) => option.value === config.language}
+          options={STT_LANGUAGE_LIST}
+          renderOption={(option) => option.label}
+          value={
+            STT_LANGUAGE_LIST.find((option) => option.value === config.language)
+              ?.label
+          }
+          onSelect={(option) => onChange("language", option.value)}
+        />
+      </Field>
     </div>
   );
 };
