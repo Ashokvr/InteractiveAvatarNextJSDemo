@@ -17,7 +17,7 @@ export function useIdleStop() {
         console.log("⏹ Idle timeout reached → stopping avatar");
         stopAvatar(); // cleanup + stop session
       }
-    }, 120_000); // 2 minutes
+    }, 300_000); // 5 minutes
   }
 
   useEffect(() => {
