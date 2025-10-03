@@ -5,7 +5,7 @@ import { Button } from "../Button";
 import { useInterrupt } from "../logic/useInterrupt";
 
 import { AudioInput } from "./AudioInput";
-import { TextInput } from "./TextInput";
+// import { TextInput } from "./TextInput";
 
 export const AvatarControls: React.FC = () => {
   const {
@@ -58,10 +58,10 @@ export const AvatarControls: React.FC = () => {
       </div> */}
 
       {/* Controls row: mic on the right */}
-      <div className="flex w-full justify-between items-center px-4">
-        <div />
+      <div className="flex w-full justify-end items-center px-4 mb-6">
         <AudioInput />
       </div>
+
 
       {/* Interrupt button if shown */}
       {showButton && (

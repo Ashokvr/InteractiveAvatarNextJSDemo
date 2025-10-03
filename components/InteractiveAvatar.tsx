@@ -382,7 +382,7 @@ function InteractiveAvatar() {
   
             {sessionState === StreamingAvatarSessionState.CONNECTED && (
               <div className="w-1/3 flex flex-col bg-zinc-800 p-4 overflow-y-auto">
-                <div className="flex-1 overflow-y-auto p-4">
+                <div className="overflow-y-auto p-4 max-h-[90vh]">
                   <MessageHistory config={config} />
                 </div>
                 <div className="border-t border-zinc-700 p-2">

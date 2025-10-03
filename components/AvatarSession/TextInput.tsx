@@ -2,17 +2,19 @@ import { TaskType, TaskMode } from "@heygen/streaming-avatar";
 import React, { useCallback, useEffect, useState } from "react";
 import { usePrevious } from "ahooks";
 
-import { Select } from "../Select";
 import { Button } from "../Button";
 import { SendIcon } from "../Icons";
 import { useTextChat } from "../logic/useTextChat";
 import { Input } from "../Input";
 import { useConversationState } from "../logic/useConversationState";
+import { useVoiceChat } from "../logic/useVoiceChat";  // 👈 add this
 
 export const TextInput: React.FC = () => {
   const { sendMessage, sendMessageSync, repeatMessage, repeatMessageSync } =
     useTextChat();
   const { startListening, stopListening } = useConversationState();
+  const { muteInputAudio, unmuteInputAudio } = useVoiceChat(); // 👈 grab mute/unmute
+
   const [taskType, setTaskType] = useState<TaskType>(TaskType.TALK);
   const [taskMode, setTaskMode] = useState<TaskMode>(TaskMode.ASYNC);
   const [message, setMessage] = useState("");
@@ -58,27 +60,15 @@ export const TextInput: React.FC = () => {
   useEffect(() => {
     if (!previousText && message) {
       startListening();
+      muteInputAudio();   // 👈 Mute mic when typing starts
     } else if (previousText && !message) {
       stopListening();
+      unmuteInputAudio(); // 👈 Unmute mic when typing stops
     }
-  }, [message, previousText, startListening, stopListening]);
+  }, [message, previousText, startListening, stopListening, muteInputAudio, unmuteInputAudio]);
 
   return (
     <div className="flex flex-row gap-2 items-end w-full">
-      {/* <Select
-        isSelected={(option) => option === taskType}
-        options={Object.values(TaskType)}
-        renderOption={(option) => option.toUpperCase()}
-        value={taskType.toUpperCase()}
-        onSelect={setTaskType}
-      />
-      <Select
-        isSelected={(option) => option === taskMode}
-        options={Object.values(TaskMode)}
-        renderOption={(option) => option.toUpperCase()}
-        value={taskMode.toUpperCase()}
-        onSelect={setTaskMode}
-      /> */}
       <Input
         className="min-w-0 flex-1"
         placeholder={`Type something for the avatar to ${taskType === TaskType.REPEAT ? "repeat" : "respond"}...`}
