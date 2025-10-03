@@ -23,6 +23,7 @@ import { useVoiceChat } from "./logic/useVoiceChat";
 import { StreamingAvatarProvider, StreamingAvatarSessionState } from "./logic";
 import { LoadingIcon } from "./Icons";
 import { AVATARS } from "@/app/lib/constants";
+import { useIdleStop } from "./logic/useIdleStop";
 
 const DEFAULT_CONFIG: StartAvatarRequest = {
   quality: AvatarQuality.High,
@@ -101,6 +102,7 @@ function InteractiveAvatar() {
     stream,
     isAvatarTalking,
   } = useStreamingAvatarSession();
+  useIdleStop();
   const { startVoiceChat } = useVoiceChat();
   const [config, setConfig] = useState<StartAvatarRequest>(DEFAULT_CONFIG);
   const [showChat, setShowChat] = useState(false);
