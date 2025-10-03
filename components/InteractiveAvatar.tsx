@@ -188,78 +188,30 @@ function InteractiveAvatar() {
   });
 
   const startSessionV2 = useMemoizedFn(async () => {
-    // 1) Validate
     const v = validateCreateForm({
       name: userName,
       email: userEmail,
       company,
       contactNo,
     });
-
+  
     setErrors(v);
     if (Object.keys(v).length > 0) return;
-
+  
     setLoading(true);
     try {
+      // 1. Create or assign KB
       const knowledgeId = await assignOrCreateKnowledgeId();
-
+  
+      // 2. Start avatar with it
       await startWithKnowledgeId(knowledgeId);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-    try {
-      // 2) Init avatar session
-      const newToken = await fetchAccessToken();
-      const avatar = initAvatar(newToken);
-
-      // Optional event hooks as in your original code…
-
-      // 3) Resolve the knowledge base (find or create)
-      const knowledgeId = await assignOrCreateKnowledgeId();
-
-      // 4) Start avatar with resolved KB
-      const cfg: StartAvatarRequest = { ...config, knowledgeId };
-      avatar.on(StreamingEvents.AVATAR_START_TALKING, (e) => {
-        //console.log("Avatar started talking", e);
-      });
-      avatar.on(StreamingEvents.AVATAR_STOP_TALKING, (e) => {
-        //console.log("Avatar stopped talking", e);
-      });
-      avatar.on(StreamingEvents.STREAM_DISCONNECTED, () => {
-        //console.log("Stream disconnected");
-      });
-      avatar.on(StreamingEvents.STREAM_READY, (event) => {
-        //console.log(">>>>> Stream ready:", event.detail);
-      });
-      avatar.on(StreamingEvents.USER_START, (event) => {
-        //console.log(">>>>> User started talking:", event);
-      });
-      avatar.on(StreamingEvents.USER_STOP, (event) => {
-        //console.log(">>>>> User stopped talking:", event);
-      });
-      avatar.on(StreamingEvents.USER_END_MESSAGE, (event) => {
-        //console.log(">>>>> User end message:", event);
-      });
-      avatar.on(StreamingEvents.USER_TALKING_MESSAGE, (event) => {
-        //console.log(">>>>> User talking message:", event);
-      });
-      avatar.on(StreamingEvents.AVATAR_TALKING_MESSAGE, (event) => {
-        //console.log(">>>>> Avatar talking message:", event);
-      });
-      avatar.on(StreamingEvents.AVATAR_END_MESSAGE, (event) => {
-        //console.log(">>>>> Avatar end message:", event);
-      });
-
-      await startAvatar(cfg);
-      await startVoiceChat();
     } catch (error) {
       console.error("Error starting avatar session:", error);
     } finally {
       setLoading(false);
     }
   });
+  
 
   useUnmount(() => {
     stopAvatar();
