@@ -382,7 +382,7 @@ function InteractiveAvatar() {
   
             {/* eye/eye-off button … */}
   
-            {sessionState === StreamingAvatarSessionState.CONNECTED && (
+            {sessionState === StreamingAvatarSessionState.CONNECTED &&  showChat && (
               <div className="w-1/3 flex flex-col bg-zinc-800 p-4 overflow-y-auto">
                 <div className="overflow-y-auto p-4 max-h-[90vh]">
                   <MessageHistory config={config} />
@@ -390,6 +390,7 @@ function InteractiveAvatar() {
                 <div className="border-t border-zinc-700 p-2">
                   {!isAvatarTalking && <ChatTextInput />}
                 </div>
+
               </div>
             )}
           </div>
