@@ -31,7 +31,7 @@ export const AvatarConfig: React.FC<AvatarConfigProps> = ({
   }, [config.knowledgeId]);
 
   return (
-    <div className="relative flex flex-col gap-4 w-[550px] py-8 max-h-full overflow-y-auto px-4">
+    <>
       <Field label="Assistant Role">
         <Select
           isSelected={(option) =>
@@ -62,6 +62,6 @@ export const AvatarConfig: React.FC<AvatarConfigProps> = ({
           onSelect={(option) => onChange("language", option.value)}
         />
       </Field>
-    </div>
+    </>
   );
 };
