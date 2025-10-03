@@ -301,7 +301,7 @@ function InteractiveAvatar() {
                         <InputRow
                           error={errors.contactNo}
                           id="contactNo"
-                          label="Contact No (E.164)"
+                          label="Contact No(+1)"
                           placeholder="+15551234567"
                           value={contactNo}
                           onChange={setContactNo}
