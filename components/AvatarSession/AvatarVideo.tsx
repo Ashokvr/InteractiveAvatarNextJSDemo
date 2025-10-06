@@ -80,6 +80,7 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
                     Collect all answers for the required fields below in the exact order.
                     Do not start with greetings or general questions.
                     Immediately begin reviewing which questions are answered and which remain.
+                    Always reply in the user's language (e.g., if the user speaks Russian, respond in Russian).
 
                     Context:
                     User details:

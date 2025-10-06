@@ -32,7 +32,7 @@ const DEFAULT_CONFIG: StartAvatarRequest = {
   knowledgeId: "7135d45468ea4ba195356c92cae0d8fb",
   voice: {
     rate: 1.0,
-    emotion: VoiceEmotion.FRIENDLY,
+    emotion: VoiceEmotion.EXCITED,
     model: ElevenLabsModel.eleven_multilingual_v2,
   },
   language: "en",
@@ -215,8 +215,6 @@ function InteractiveAvatar() {
     avatar.on(StreamingEvents.AVATAR_END_MESSAGE, (event) => {
       console.log(">>>>> Avatar end message:", event);
     });
-
-
     await startAvatar(cfg);
     await startVoiceChat();
   }
