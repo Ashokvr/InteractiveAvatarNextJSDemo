@@ -68,7 +68,10 @@ async function heygen<T = any>(path: string, init?: RequestInit): Promise<T> {
 
 async function listKnowledgeBases() {
   // GET /knowledge_base/list
-  return heygen<{ data: { list: Array<{ id: string; name: string }> } }>(
+  return heygen<{ data: { list: Array<{
+    opening: null;
+    prompt: null; id: string; name: string 
+}> } }>(
     "/knowledge_base/list",
     { method: "GET" }
   );
@@ -82,7 +85,11 @@ async function createKnowledgeBase(payload: Payload) {
     prompt: buildPrompt(payload),
   };
 
-  return heygen<{ data: { id: string } }>("/knowledge_base/create", {
+  return heygen<{ data: {
+    opening: null;
+    prompt: null;
+    name: any; id: string 
+} }>("/knowledge_base/create", {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -114,13 +121,24 @@ export async function POST(req: NextRequest) {
         }) || null;
   
       if (payload.onlyFind) {
-        // FIND-ONLY MODE
-        return NextResponse.json({ found: !!match, knowledgeId: match?.id || null });
+          return NextResponse.json({
+            found: !!match,
+            knowledgeId: match?.id || null,
+            name: match?.name || null,
+            opening:match?.opening || null,
+            prompt: match?.prompt || null,
+          });
       }
   
       // ASSIGN (find or create)
       if (match) {
-        return NextResponse.json({ knowledgeId: match.id, created: false });
+        return NextResponse.json({
+          knowledgeId: match.id,
+          name: match.name,
+          opening:match.opening || null,
+          prompt: match.prompt || null,
+          created: false,
+        });
       }
   
       // Must have all fields to create
@@ -133,7 +151,13 @@ export async function POST(req: NextRequest) {
   
       const created = await createKnowledgeBase(payload as Required<Payload>);
 
-      return NextResponse.json({ knowledgeId: created.data.id, created: true });
+      return NextResponse.json({
+        knowledgeId: created.data.id,
+        name: created.data.name,
+        opening: created.data.opening || null,
+        prompt: created.data.prompt || null,
+        created: true,
+      });
     } catch (err: any) {
       console.error(err);
 

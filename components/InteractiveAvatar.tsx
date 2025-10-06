@@ -1,3 +1,4 @@
+/* eslint-disable padding-line-between-statements */
 /* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
 import {
@@ -24,7 +25,7 @@ import { StreamingAvatarProvider, StreamingAvatarSessionState } from "./logic";
 import { LoadingIcon } from "./Icons";
 import { AVATARS } from "@/app/lib/constants";
 import { useIdleStop } from "./logic/useIdleStop";
-
+import { useKnowledgeState } from "./logic/knowledgeState";
 const DEFAULT_CONFIG: StartAvatarRequest = {
   quality: AvatarQuality.High,
   avatarName: AVATARS[0].avatar_id,
@@ -119,13 +120,30 @@ function InteractiveAvatar() {
   const [errors, setErrors] = useState<FieldErrors>({});
 
   const mediaStream = useRef<HTMLVideoElement>(null);
-
+  const { setKnowledge } = useKnowledgeState();
   async function fetchAccessToken() {
     const response = await fetch("/api/get-access-token", { method: "POST" });
     const token = await response.text();
 
     return token;
   }
+  function parseKnowledgeName(fullName: string) {
+    if (!fullName) return {};
+  
+    const parts = fullName.split("-");
+    if (parts.length < 4) {
+      return {};
+    }
+  
+    const [company, name, email, contactNo] = parts;
+    return {
+      company,
+      name,
+      email,
+      contactNo,
+    };
+  }
+  
   async function assignOrCreateKnowledgeId() {
     const res = await fetch("/api/knowledge/assign", {
       method: "POST",
@@ -135,20 +153,69 @@ function InteractiveAvatar() {
         email: userEmail,
         company,
         contactNo,
-        opening: "So, you are interested in getting an ISO-9001 quality management system developed. \nI'll be happy to help. For that, I'd need some info about your company. Do you mind answering a few questions?",
+        opening:
+          "So, you are interested in getting an ISO-9001 quality management system developed. I'll be happy to help.",
       }),
     });
-
+  
     if (!res.ok) throw new Error(await res.text());
     const json = await res.json();
-
+    
+  
+    // ✅ Extract parts from name like "Company-Name-Email-ContactNo"
+    const parsed = parseKnowledgeName(json.name || "");
+  
+    // ✅ Save structured data to Zustand
+    setKnowledge({
+      knowledgeId: json.knowledgeId,
+      name: parsed.name || userName,
+      userCompany: parsed.company || company,
+      userEmail: parsed.email || userEmail,
+      userContact: parsed.contactNo || contactNo,
+      opening: json.opening || "",
+      prompt: json.prompt || "",
+    });
+  
     return json.knowledgeId as string;
   }
+  
 
   async function startWithKnowledgeId(knowledgeId: string) {
     const token = await fetchAccessToken();
     const avatar = initAvatar(token);
     const cfg: StartAvatarRequest = { ...config, knowledgeId };
+    console.log("Starting avatar with config:", cfg); 
+    avatar.on(StreamingEvents.AVATAR_START_TALKING, (e) => {
+      console.log("Avatar started talking", e);
+    });
+    avatar.on(StreamingEvents.AVATAR_STOP_TALKING, (e) => {
+      console.log("Avatar stopped talking", e);
+    });
+    avatar.on(StreamingEvents.STREAM_DISCONNECTED, () => {
+      console.log("Stream disconnected");
+    });
+    avatar.on(StreamingEvents.STREAM_READY, (event) => {
+      console.log(">>>>> Stream ready:", event.detail);
+    });
+    avatar.on(StreamingEvents.USER_START, (event) => {
+      console.log(">>>>> User started talking:", event);
+    });
+    avatar.on(StreamingEvents.USER_STOP, (event) => {
+      console.log(">>>>> User stopped talking:", event);
+    });
+    avatar.on(StreamingEvents.USER_END_MESSAGE, (event) => {
+      console.log(">>>>> User end message:", event);
+    });
+    avatar.on(StreamingEvents.USER_TALKING_MESSAGE, (event) => {
+      console.log(">>>>> User talking message:", event);
+    });
+    avatar.on(StreamingEvents.AVATAR_TALKING_MESSAGE, (event) => {
+      console.log(">>>>> Avatar talking message:", event);
+    });
+    avatar.on(StreamingEvents.AVATAR_END_MESSAGE, (event) => {
+      console.log(">>>>> Avatar end message:", event);
+    });
+
 
     await startAvatar(cfg);
     await startVoiceChat();
@@ -158,10 +225,9 @@ function InteractiveAvatar() {
   const onLookup = useMemoizedFn(async () => {
     if (!lookupValue.trim()) {
       setLookupError("Enter email or phone number.");
-
       return;
     }
-
+  
     setLoading(true);
     try {
       const res = await fetch("/api/knowledge/assign", {
@@ -173,9 +239,25 @@ function InteractiveAvatar() {
           onlyFind: true,
         }),
       });
-      const { found, knowledgeId } = await res.json();
-
+  
+      const json = await res.json();
+      const { found, knowledgeId, name } = json;
+      console.log("Lookup result:", name,knowledgeId);
       if (found && knowledgeId) {
+        // ✅ Parse full KB name and store structured info
+        const parsed = parseKnowledgeName(name || "");
+  
+        setKnowledge({
+          knowledgeId,
+          name: parsed.name || "",
+          userCompany: parsed.company || "",
+          userEmail: parsed.email || lookupValue.includes("@") ? lookupValue : "",
+          userContact:
+            parsed.contactNo || (!lookupValue.includes("@") ? lookupValue : ""),
+          opening: json.opening || "",
+          prompt: json.prompt || "",
+        });
+  
         await startWithKnowledgeId(knowledgeId);
       } else {
         if (lookupValue.includes("@")) setUserEmail(lookupValue);
@@ -188,7 +270,6 @@ function InteractiveAvatar() {
       setLoading(false);
     }
   });
-
   const startSessionV2 = useMemoizedFn(async () => {
     const v = validateCreateForm({
       name: userName,
@@ -214,10 +295,6 @@ function InteractiveAvatar() {
     }
   });
   
-
-  useUnmount(() => {
-    stopAvatar();
-  });
 
   useEffect(() => {
     if (stream && mediaStream.current) {
