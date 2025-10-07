@@ -184,36 +184,36 @@ function InteractiveAvatar() {
     const token = await fetchAccessToken();
     const avatar = initAvatar(token);
     const cfg: StartAvatarRequest = { ...config, knowledgeId };
-    console.log("Starting avatar with config:", cfg); 
+    //console.log("Starting avatar with config:", cfg); 
     avatar.on(StreamingEvents.AVATAR_START_TALKING, (e) => {
-      console.log("Avatar started talking", e);
+      //console.log("Avatar started talking", e);
     });
     avatar.on(StreamingEvents.AVATAR_STOP_TALKING, (e) => {
-      console.log("Avatar stopped talking", e);
+      //console.log("Avatar stopped talking", e);
     });
     avatar.on(StreamingEvents.STREAM_DISCONNECTED, () => {
-      console.log("Stream disconnected");
+      //console.log("Stream disconnected");
     });
     avatar.on(StreamingEvents.STREAM_READY, (event) => {
-      console.log(">>>>> Stream ready:", event.detail);
+      //console.log(">>>>> Stream ready:", event.detail);
     });
     avatar.on(StreamingEvents.USER_START, (event) => {
-      console.log(">>>>> User started talking:", event);
+      //console.log(">>>>> User started talking:", event);
     });
     avatar.on(StreamingEvents.USER_STOP, (event) => {
-      console.log(">>>>> User stopped talking:", event);
+      //console.log(">>>>> User stopped talking:", event);
     });
     avatar.on(StreamingEvents.USER_END_MESSAGE, (event) => {
-      console.log(">>>>> User end message:", event);
+      //console.log(">>>>> User end message:", event);
     });
     avatar.on(StreamingEvents.USER_TALKING_MESSAGE, (event) => {
-      console.log(">>>>> User talking message:", event);
+      //console.log(">>>>> User talking message:", event);
     });
     avatar.on(StreamingEvents.AVATAR_TALKING_MESSAGE, (event) => {
-      console.log(">>>>> Avatar talking message:", event);
+      //console.log(">>>>> Avatar talking message:", event);
     });
     avatar.on(StreamingEvents.AVATAR_END_MESSAGE, (event) => {
-      console.log(">>>>> Avatar end message:", event);
+      //console.log(">>>>> Avatar end message:", event);
     });
     await startAvatar(cfg);
     await startVoiceChat();
@@ -240,7 +240,7 @@ function InteractiveAvatar() {
   
       const json = await res.json();
       const { found, knowledgeId, name } = json;
-      console.log("Lookup result:", name,knowledgeId);
+      //console.log("Lookup result:", name,knowledgeId);
       if (found && knowledgeId) {
         // ✅ Parse full KB name and store structured info
         const parsed = parseKnowledgeName(name || "");
@@ -287,7 +287,7 @@ function InteractiveAvatar() {
       // 2. Start avatar with it
       await startWithKnowledgeId(knowledgeId);
     } catch (error) {
-      console.error("Error starting avatar session:", error);
+      //console.error("Error starting avatar session:", error);
     } finally {
       setLoading(false);
     }
@@ -433,11 +433,11 @@ function InteractiveAvatar() {
             </div>
               <button
               aria-pressed={showChat}
-              className="absolute top-3 right-3 !p-2 bg-opacity-50 z-10"
+              className="absolute top-1/2 right-3 -translate-y-1/2 !p-2 bg-opacity-50 z-10"
               title={showChat ? "Hide chat" : "Show chat"}
               type="button"
               onClick={() => setShowChat((v) => !v)}
-            >
+              >
               {/* SVG: eye when hidden, eye-off when visible */}
               {showChat ? (
                 // Eye-off

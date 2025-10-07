@@ -31,6 +31,7 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
   const handleStopClick = async () => {
     try {
       setIsProcessing(true);
+      //console.log("Parsing conversation for Q&A extraction...",messages);
       const parseRes = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -49,7 +50,7 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
       }
       
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       alert("Something went wrong while processing. Please retry the session again.");
     } finally {
       setIsProcessing(false);
@@ -129,11 +130,11 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
 
       if (!res.ok) throw new Error("Failed to update knowledge base");
       const data = await res.json();
-      console.log("Update success:", data);
+      //console.log("Update success:", data);
       alert("Knowledge base updated successfully!");
       stopAvatar();
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       alert("Error updating profile");
     } finally {
       setIsSaving(false);
@@ -158,10 +159,10 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
 
       if (!res.ok) throw new Error("Failed to delete knowledge base");
       const data = await res.json();
-      console.log("Delete success:", data);
+      //console.log("Delete success:", data);
       alert("Knowledge base deleted successfully!");
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       alert("Error deleting profile");
     } finally {
       setIsDeleting(false);

@@ -14,7 +14,7 @@ export function useIdleStop() {
     if (idleTimer.current) clearTimeout(idleTimer.current);
     idleTimer.current = setTimeout(() => {
       if (sessionState !== StreamingAvatarSessionState.INACTIVE) {
-        console.log("⏹ Idle timeout reached → stopping avatar");
+        //console.log("⏹ Idle timeout reached → stopping avatar");
         stopAvatar(); // cleanup + stop session
       }
     }, 300_000); // 5 minutes
