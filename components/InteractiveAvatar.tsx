@@ -131,18 +131,29 @@ function InteractiveAvatar() {
     if (!fullName) return {};
   
     const parts = fullName.split("-");
-    if (parts.length < 4) {
-      return {};
+    const cleaned = parts.map((p) => p.trim());
+    
+    // Handle flexible cases
+    if (cleaned.length === 4) {
+      const [company, name, email, contactNo] = cleaned;
+      return { company, name, email, contactNo };
     }
   
-    const [company, name, email, contactNo] = parts;
-    return {
-      company,
-      name,
-      email,
-      contactNo,
-    };
+    if (cleaned.length === 3) {
+      const [company, name, maybeEmailOrPhone] = cleaned;
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(maybeEmailOrPhone);
+      if (isEmail) return { company, name, email: maybeEmailOrPhone, contactNo: "" };
+      return { company, name, email: "", contactNo: maybeEmailOrPhone };
+    }
+  
+    if (cleaned.length === 2) {
+      const [company, name] = cleaned;
+      return { company, name, email: "", contactNo: "" };
+    }
+  
+    return {};
   }
+  
   
   async function assignOrCreateKnowledgeId() {
     const res = await fetch("/api/knowledge/assign", {
@@ -166,12 +177,13 @@ function InteractiveAvatar() {
     const parsed = parseKnowledgeName(json.name || "");
   
     // ✅ Save structured data to Zustand
+    console.log("Assigned/Created KB:", json.knowledgeId, parsed);
     setKnowledge({
       knowledgeId: json.knowledgeId,
       name: parsed.name || userName,
       userCompany: parsed.company || company,
-      userEmail: parsed.email || userEmail,
-      userContact: parsed.contactNo || contactNo,
+      userEmail: parsed.email && parsed.email.includes("@") ? parsed.email : userEmail,
+      userContact: parsed.contactNo && parsed.contactNo.startsWith("+") ? parsed.contactNo : contactNo,
       opening: json.opening || "",
       prompt: json.prompt || "",
     });
@@ -244,14 +256,13 @@ function InteractiveAvatar() {
       if (found && knowledgeId) {
         // ✅ Parse full KB name and store structured info
         const parsed = parseKnowledgeName(name || "");
-  
+        console.log("Found KB:", knowledgeId, parsed);
         setKnowledge({
-          knowledgeId,
-          name: parsed.name || "",
-          userCompany: parsed.company || "",
-          userEmail: parsed.email || lookupValue.includes("@") ? lookupValue : "",
-          userContact:
-            parsed.contactNo || (!lookupValue.includes("@") ? lookupValue : ""),
+          knowledgeId: json.knowledgeId,
+          name: parsed.name || userName,
+          userCompany: parsed.company || company,
+          userEmail: parsed.email && parsed.email.includes("@") ? parsed.email : userEmail,
+          userContact: parsed.contactNo && parsed.contactNo.startsWith("+") ? parsed.contactNo : contactNo,
           opening: json.opening || "",
           prompt: json.prompt || "",
         });

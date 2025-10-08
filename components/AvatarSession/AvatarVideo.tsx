@@ -14,7 +14,7 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
   const { sessionState, stopAvatar } = useStreamingAvatarSession();
   const { connectionQuality } = useConnectionQuality();
   const { messages } = useMessageHistory();
-  const { knowledgeId, name, userCompany,userEmail,userContact } = useKnowledgeState();
+  const { prompt,knowledgeId, name, userCompany,userEmail,userContact } = useKnowledgeState();
 
 
   const [showPopup, setShowPopup] = useState(false);
@@ -32,10 +32,18 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
     try {
       setIsProcessing(true);
       //console.log("Parsing conversation for Q&A extraction...",messages);
+      const marker = "Collected answers so far:";
+      let extractedPrompt = "";
+  
+      if (prompt && prompt.includes(marker)) {
+        extractedPrompt = prompt.slice(prompt.indexOf(marker)).trim();
+      } else {
+        extractedPrompt = prompt || "";
+      }
       const parseRes = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages }),
+        body: JSON.stringify({ messages,extractedPrompt }),
       });
   
       if (!parseRes.ok) throw new Error("Failed to parse conversation");
@@ -69,7 +77,6 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
       const dynamicPrompt = editableQA
         .map((item, i) => `${i + 1}. ${item.question}\nAnswer: ${item.answer}`)
         .join("\n\n");
-
       const body = {
         knowledgeId: knowledgeId,
         name: `${userCompany || "Company"}-${name || "User"}-${userEmail || "email"}-${userContact || "contact"}`,

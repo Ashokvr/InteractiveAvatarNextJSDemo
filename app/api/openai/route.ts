@@ -6,7 +6,7 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = await req.json();
+    const { messages,extractedPrompt } = await req.json();
     
     const completion = await client.chat.completions.create({
       model: "gpt-4o",
@@ -27,22 +27,15 @@ export async function POST(req: NextRequest) {
             - Do not include commentary or markdown.
             - If a question has no answer, use "-".
             - Ensure answers are clean and grammatically correct.
-            - Below are the questions needed to extract related to the user information if available:
-              1. Can verify the name of your company is {companyname}?                       
-              2. What does your company do?
-              3. How many employees do you have? 
-              4. Can you tell me who’s on your team and how roles are divided, for now, just a simple description in your own words is fine? 
-              5. What products and services do you provide? Please provide a list.
-              6. Are there any industry standards, regulations, or customer specifications your products or services must follow? 
-              7. Do you want to certify all of your products and services?
-              8. Are all processes performed in-house, or are some outsourced?
-              9. What production capabilities do you have (processes, equipment, etc.)? Please provide a list.
-              10. How many locations/sites do you have?
-              11. Should the management system cover all locations?
-              12. Who will be responsible for the implementation and control of the Quality Management System (QMS)?
-              13. What software do you use for processes such as sales, production, and purchasing?
-              14. Are your products exported?
-
+            - Use the user messages to identify if the user has added or modified any information.
+            - If the user’s latest message clearly updates or changes an answer, replace the previous answer with the new one.
+            - If the user’s message does not mention or modify an existing answer, keep the previous answer as-is.
+            - If a question was previously unanswered and the user now provides an answer, add it.
+            - Never delete existing questions or answers.
+            - Return all existing answers along with any newly added or updated ones.
+            - Maintain the same question order as in the original data.
+            Reference Prompt (Existing Context):
+            ${extractedPrompt}
             Additional Linguistic Extraction and Generation Rules:
             - When the question requires linguistic analysis or generation, identify and classify words according to their parts of speech:
               - Nouns: Names of a person, place, thing, idea, or concept.
