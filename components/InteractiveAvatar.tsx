@@ -33,10 +33,10 @@ const DEFAULT_CONFIG: StartAvatarRequest = {
   voice: {
     rate: 1.0,
     emotion: VoiceEmotion.FRIENDLY,
-    model: ElevenLabsModel.eleven_multilingual_v2,
+    model: ElevenLabsModel.eleven_flash_v2_5,
   },
   language: "en",
-  voiceChatTransport: VoiceChatTransport.WEBSOCKET,
+  voiceChatTransport: VoiceChatTransport.LIVEKIT,
   sttSettings: { provider: STTProvider.DEEPGRAM },
 };
 
